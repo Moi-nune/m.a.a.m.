@@ -2,6 +2,7 @@
 const { Client, WebhookClient } = require("discord.js-selfbot-v13");
 const fs = require("fs-extra");
 const chalk = require("chalk");
+const express = require('express');
 
 // Deciding which config to use
 const config = process.env.CONFIG
@@ -11,6 +12,20 @@ let log;
 if (config?.logWebhook?.length > 25) {
   log = new WebhookClient({ url: config.logWebhook });
 }
+
+
+//------------------------- KEEP-ALIVE--------------------------------//
+
+const app = express();
+if (Number(process.version.slice(1).split(".")[0]) < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
+app.get("/", (req, res) => {
+    res.status(200).send({
+        success: "true"
+    });
+});
+app.listen(process.env.PORT || 8000);
+
+//--------------------------------------------------------------//
 
 // Getting & seperating the tokens
 let data = process.env.TOKENS || fs.readFileSync("./tokens.txt", "utf-8");
@@ -27,6 +42,7 @@ for (let i = 0; i < tokensAndChannelIds.length; i += 2) {
     }
   }
 }
+
 
 // Replit .env check
 if (process.env.REPLIT_DB_URL && (!process.env.TOKENS || !process.env.CONFIG))
