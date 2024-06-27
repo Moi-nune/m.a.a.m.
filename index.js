@@ -1,6 +1,3 @@
-let version = "1.1.0";
-// Version counter
-
 // Importing required packages
 const { Client, WebhookClient } = require("discord.js-selfbot-v13");
 const fs = require("fs-extra");
@@ -75,7 +72,7 @@ async function Login(token, channelId) {
   // Ready event which starts the spammer
   client.on("ready", async () => {
     console.log(`Logged in to ` + chalk.red(client.user.tag) + `!`);
-    client.user.setStatus("invisible");
+    client.user.setStatus("dnd");
 
     const spamChannel = await client.channels.fetch(channelId);
     if (!spamChannel) {
@@ -102,18 +99,12 @@ async function start() {
   if (log)
     embed = {
       title: `Started!`,
-      url: "https://github.com/kyan0045/Spammer",
       description: `Found ${config.tokens.length} tokens!`,
       color: "#5cf7a9",
       timestamp: new Date(),
-      footer: {
-        text: "Spammer by @kyan0045",
-        icon_url: "https://avatars.githubusercontent.com/u/84374752?v=4",
-      },
     };
   log?.send({
     username: "Spammer Logs",
-    avatarURL: "https://avatars.githubusercontent.com/u/84374752?v=4",
     embeds: [embed],
   });
 }
