@@ -99,12 +99,12 @@ async function start() {
   if (log)
     embed = {
       title: `Started!`,
-      description: `Found ${config.tokens.length} tokens!`,
+      description: `Found ${config.tokens.length} accs!`,
       color: "#5cf7a9",
       timestamp: new Date(),
     };
   log?.send({
-    username: "Spammer Logs",
+    username: "Logs",
     embeds: [embed],
   });
 }
